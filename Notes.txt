@@ -1,0 +1,12 @@
+将每个Semester存为一个文件，且用规范化的文件名，读写文件时询问学期信息，自动对应文件名
+
+文件开头存储必要的信息
+
+用二维数组存储、处理数据，每一格放一个Score对象。预留空间，每次开10个，用StuCapacity来控制。
+
+Set, Print, Modify 三个函数都是要通过一步步引导来输入，是三个无参函数，设定值在输入过程中cin得到
+
+注意cin.clear(), cin.sync()
+
+Proc里面对Stu和Subj的操作是总体的，里面再调用Student和Subject的Add，Modify，etc
+Proc里面的Add包括录入信息，Modify包括修改成绩（？）
