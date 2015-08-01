@@ -14,6 +14,10 @@ Proc Global;
 Semester Sem, *Sems;
 Student Stu, *Stus;
 Subject Subj, *Subjs;
+Result **Data;
+ifstream InFile;
+ofstream OutFile;
+char FileName[20]={0};
 
 void Proc::Line0()
 {
@@ -51,7 +55,7 @@ void Proc::Welcome()
 void Proc::Menu()
 {
 	Global.Line0();
-	cout<<"请选择您所需的操作：\n1.输入信息\n2.查看信息\n3.修改信息\n4.计算排名与GPA\n0.退出系统\n\n";
+	cout<<"请选择您所需的操作：\n1.信息录入与修改\n2.信息检索与数据计算\n0.退出系统\n\n";
 	int Choice;
 	cin.clear();
 	cin.sync();
@@ -71,12 +75,24 @@ void Proc::Menu()
 			break;
 		case 1:
 			Sem.Set();
+			sprintf(FileName,"%d_%d_%d.score",Sem.EntranceYear,Sem.YearNum,Sem.TermNum);
+			InFile.open(FileName, ios::in|ios::binary|ios::_Nocreate);
+			if (!InFile)
+			{
+				cout<<"该学期信息尚未录入，将创建新文件。"<<endl;
+				Global.NewData();
+				Global.WriteData();
+			}
+			else
+			{
+				cout<<"该学期信息已存在，将打开已有文件。"<<endl;
+				Global.ReadData();
+				InFile.close();
+				OutFile.open(FileName,ios::out|ios::binary);
+				Global.WriteData();
+			}
 			break;
-		case 2:												// TODO
-			break;
-		case 3:												// TODO
-			break;
-		case 4:												// TODO
+		case 2:															// TODO
 			break;
 		default:
 			cout<<"输入错误，请重新输入："<<endl;
@@ -86,7 +102,7 @@ void Proc::Menu()
 		cin.sync();
 		cout<<endl;
 		Global.Line0();
-		cout<<"请选择您所需的操作：\n1.输入信息\n2.查看信息\n3.修改信息\n4.计算排名与GPA\n0.退出系统\n\n";
+		cout<<"请选择您所需的操作：\n1.信息录入与修改\n2.信息检索与数据计算\n0.退出系统\n\n";
 		cin>>Choice;
 	}
 	cout<<"\n感谢您的使用！再见！\n"<<endl;
@@ -146,5 +162,38 @@ void Proc::UpdateSubjs()
 
 void Proc::NewData()
 {
-	Sem.Set();
+	OutFile.open(FileName, ios::out|ios::binary);
+	if (!OutFile)
+	{
+		cout<<"文件创建失败。意外退出。"<<endl;
+		exit(1);
+	}
+	StuCapacity = 10;
+	SubjCapacity = 10;
+	Data = new Result* [StuCapacity];
+	for (int i=0; i<StuCapacity; ++i)
+		Data[i] = new Result [SubjCapacity];
+}
+
+void Proc::ReadData()
+{
+	InFile.read((char*) &StuCount, sizeof(int));
+	InFile.read((char*) &SubjCount, sizeof(int));
+	StuCapacity = (StuCount-1) / 10 * 10 + 10;			// Count 和 Capacity 间始终满足这个关系
+	SubjCapacity = (SubjCount-1) / 10 * 10 + 10;
+	Data = new Result* [StuCapacity];
+	for (int i=0; i<StuCapacity; ++i)
+		Data[i] = new Result [SubjCapacity];
+	for (int i=0; i<StuCapacity; ++i)
+		for (int j=0; j<SubjCapacity; ++j)
+			InFile.read((char*) &Data[i][j], sizeof(Result));
+}
+
+void Proc::WriteData()
+{
+	OutFile.write((char*) &StuCount, sizeof(int));
+	OutFile.write((char*) &SubjCount, sizeof(int));
+	for (int i=0; i<StuCapacity; ++i)
+		for (int j=0; j<SubjCapacity; ++j)
+			OutFile.write((char*) &Data[i][j], sizeof(Result));
 }

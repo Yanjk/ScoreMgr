@@ -31,6 +31,12 @@ extern int SubjCapacity;
 extern string Gen[2];
 extern Proc Global;
 extern Semester Sem, *Sems;
+extern Student Stu, *Stus;
+extern Subject Subj, *Subjs;
+extern Result **Data;
+extern ifstream InFile;
+extern ofstream OutFile;
+extern char FileName[20];
 
 // 虚基类，作为所有数据类的基类
 class BaseData
@@ -116,9 +122,9 @@ public:
 	void UpdateSems();
 	void UpdateStus();
 	void UpdateSubjs();
-	void NewData();		//
-	void ReadData();	//
-	void WriteData();	//
+	void NewData();	
+	void ReadData();
+	void WriteData();
 	void PrintStus();	//
 	void PrintSubjs();	//
 	void AddStu();		//
