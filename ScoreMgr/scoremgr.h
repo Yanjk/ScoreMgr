@@ -21,11 +21,16 @@ class Subject;
 class Result;
 class Proc;
 
-// 定义全局变量，记录学生总数和学科总数
+// 对全局变量的引用声明，记录学生总数和学科总数
+extern int SemCount;
 extern int StuCount;
 extern int SubjCount;
+extern int SemCapacity;
+extern int StuCapacity;
+extern int SubjCapacity;
 extern string Gen[2];
 extern Proc Global;
+extern Semester Sem, *Sems;
 
 // 虚基类，作为所有数据类的基类
 class BaseData
@@ -45,6 +50,7 @@ public:
 	virtual void Modify();
 	friend istream & operator >> (istream &input, Semester Sem);
 	friend ostream & operator << (ostream &output, Semester Sem);
+	int operator == (Semester Sem2);
 	friend class Proc;
 protected:
 	int EntranceYear;
@@ -59,6 +65,8 @@ public:
 	virtual void Set();
 	virtual void Print();
 	virtual void Modify();
+	void Copy(Student Stu);
+	int operator == (Student Stu2);
 	friend class Proc;
 protected:
 	string StuName;
@@ -74,6 +82,8 @@ public:
 	virtual void Set();
 	virtual void Print();
 	virtual void Modify();
+	void Copy(Subject Subj);
+	int operator == (Subject Subj2);
 	friend class Proc;
 protected:
 	string SubjName;
@@ -85,12 +95,10 @@ protected:
 class Result : public Student, public Subject
 {
 public:
-	Result(){}
-	// 重载的构造函数，用于向继承的基类部分传递信息
-	Result(Student Stu, Subject Subj):Student(Stu),Subject(Subj){}
 	virtual void Set();
 	virtual void Print();
 	virtual void Modify();
+	void Copy(Student Stu, Subject Subj);
 	friend class Proc;
 protected:
 	int Score;
@@ -105,22 +113,25 @@ public:
 	void Line1();
 	void Welcome();
 	void Menu();
-	void NewData();
-	void ReadData();
-	void WriteData();
-	void AddStu();
-	void DelStu();
-	void ModifyStu();
-	void SearchStu();
-	void AddSubj();
-	void DelSubj();
-	void ModifySubj();
-	void SearchSubj();
-	void SortSubj();
-	void PrintByStu();
-	void PrintBySubj();
-	void PrintAll();
-	void CalcGPA();
-	void SortGPA();
-	void CalcAllGPA();
+	void UpdateSems();
+	void UpdateStus();
+	void UpdateSubjs();
+	void NewData();		//
+	void ReadData();	//
+	void WriteData();	//
+	void PrintStus();	//
+	void PrintSubjs();	//
+	void AddStu();		//
+	void DelStu();		//
+	void ModifyStu();	//
+	void AddSubj();		//
+	void DelSubj();		//
+	void ModifySubj();	//
+	void SearchStu();	//
+	void SearchSubj();	//
+	void SortSubj();	//
+	void PrintByStu();	//
+	void PrintBySubj();	//
+	void CalcGPA();		//
+	void SortGPA();		//
 };

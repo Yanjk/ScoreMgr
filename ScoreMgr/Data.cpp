@@ -68,6 +68,12 @@ ostream & operator << (ostream &output, Semester Sem)
 	return output;
 }
 
+int Semester::operator == (Semester Sem2)
+{
+	return ( (EntranceYear==Sem2.EntranceYear) && (YearNum==Sem2.YearNum)
+		&& (TermNum==Sem2.TermNum));
+}
+
 void Student::Set()
 {
 	Global.Line0();
@@ -152,6 +158,20 @@ void Student::Modify()
 	Global.Line1();
 }
 
+void Student::Copy(Student Stu)
+{
+	StuName=Stu.StuName;
+	Age=Stu.Age;
+	Gender=Stu.Gender;
+	StuNum=Stu.StuNum;
+}
+
+int Student::operator == (Student Stu2)
+{
+	return ( (StuName==Stu2.StuName) &&  (Age==Stu2.Age) 
+		&& (Gender==Stu2.Gender) && (StuNum==Stu2.StuNum) );
+}
+
 void Subject::Set()
 {
 	Global.Line0();
@@ -224,6 +244,19 @@ void Subject::Modify()
 	Global.Line1();	
 }
 
+void Subject::Copy(Subject Subj)
+{
+	SubjName=Subj.SubjName;
+	Credit=Subj.Credit;
+	SubjNum=Subj.SubjNum;
+}
+
+int Subject::operator == (Subject Subj2)
+{
+	return ( (SubjName==Subj2.SubjName) && (Credit==Subj2.Credit)
+		&& (SubjNum==Subj2.SubjNum) );
+}
+
 void Result::Set()
 {
 	Global.Line0();
@@ -255,4 +288,10 @@ void Result::Modify()
 	}
 	else cout<<"ÒÑ·ÅÆúÐÞ¸Ä¡£"<<endl;
 	Global.Line1();
+}
+
+void Result::Copy(Student Stu, Subject Subj)
+{
+	Student::Copy(Stu);
+	Subject::Copy(Subj);
 }

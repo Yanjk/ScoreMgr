@@ -3,8 +3,6 @@
 int main()
 {
 	Global.Welcome();
-	Student Stu;
-	Stu.Set();
-	Stu.Modify();
+	Global.Menu();
 	return 0;
 }
