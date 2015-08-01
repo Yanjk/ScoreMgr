@@ -10,3 +10,12 @@ Set, Print, Modify Èý¸öº¯Êý¶¼ÊÇÒªÍ¨¹ýÒ»²½²½Òýµ¼À´ÊäÈë£¬ÊÇÈý¸öÎÞ²Îº¯Êý£¬Éè¶¨ÖµÔÚÊ
 
 ProcÀïÃæ¶ÔStuºÍSubjµÄ²Ù×÷ÊÇ×ÜÌåµÄ£¬ÀïÃæÔÙµ÷ÓÃStudentºÍSubjectµÄAdd£¬Modify£¬etc
 ProcÀïÃæµÄAdd°üÀ¨Â¼ÈëÐÅÏ¢£¬Modify°üÀ¨ÐÞ¸Ä³É¼¨£¨£¿£©
+
+¶Ô¶þÎ¬Êý×éÖÐResult¶ÔÏóÖÐ¼Ì³ÐÀ´µÄµÄStudentºÍSubject²¿·Ö£¬¿ÉÒÔÀûÓÃ¹¹Ôìº¯Êý¡£Õâ¾ÍÐèÒªÎªResultÀàÐ´Ò»¸ö¹¹Ôìº¯Êý¡£
+
+
+---------------------------------------------------
+
+Óöµ½µÄÎÊÌâ£º
+
+1. Í·ÎÄ¼þÖÐ¶¨Òå±äÁ¿£¬·¢Éú¶àÖØ¶¨Òå
