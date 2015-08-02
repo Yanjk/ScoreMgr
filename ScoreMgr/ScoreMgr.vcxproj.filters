@@ -24,6 +24,9 @@
     <ClCompile Include="Data.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scoremgr.h">

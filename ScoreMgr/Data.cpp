@@ -3,7 +3,8 @@
 void Semester::Set()
 {
 	Global.Line0();
-	cout<<"请输入要操作的学期信息：\n学生入学年份:"<<endl;
+	cout<<"请输入要操作的学期信息：\n"
+		<<"学生入学年份:\n";
 	cin>>EntranceYear;
 	cout<<"学年序号（如大二为2）："<<endl;
 	cin>>YearNum;
@@ -37,7 +38,8 @@ void Semester::Modify()
 istream & operator >> (istream &input, Semester Sem)
 {
 	Global.Line0();
-	cout<<"请输入要操作的学期信息：\n学生入学年份:"<<endl;
+	cout<<"请输入要操作的学期信息：\n"
+		<<"学生入学年份:\n";
 	cin>>Sem.EntranceYear;
 	cout<<"学年序号（如大二为2）："<<endl;
 	cin>>Sem.YearNum;
@@ -107,7 +109,12 @@ void Student::Modify()
 	Global.Line0();
 	cout<<"该学生原信息为："<<endl;
 	Print();
-	cout<<"\n请输入要修改的项目：\n1.姓名\n2.年龄\n3.性别\n4.学号\n0.结束修改"<<endl;
+	cout<<"\n请输入要修改的项目：\n"
+		<<"1.姓名\n"
+		<<"2.年龄\n"
+		<<"3.性别\n"
+		<<"4.学号\n"
+		<<"0.结束修改\n\n";
 	int Choice;
 	cin.clear();
 	cin.sync();
@@ -150,7 +157,12 @@ void Student::Modify()
 			cout<<"修改成功！"<<endl;
 			Print();
 		}
-		cout<<"\n请输入要修改的项目：\n1.姓名\n2.年龄\n3.性别\n4.学号\n0.结束修改"<<endl;
+		cout<<"\n请输入要修改的项目：\n"
+			<<"1.姓名\n"
+			<<"2.年龄\n"
+			<<"3.性别\n"
+			<<"4.学号\n"
+			<<"0.结束修改\n\n";
 		cin.clear();
 		cin.sync();
 		cin>>Choice;
@@ -197,7 +209,11 @@ void Subject::Modify()
 	Global.Line0();
 	cout<<"该课程原信息为："<<endl;
 	Print();
-	cout<<"\n请输入要修改的项目：\n1.课程名\n2.学分\n3.课程号\n0.结束修改"<<endl;
+	cout<<"\n请输入要修改的项目：\n"
+		<<"1.课程名\n"
+		<<"2.学分\n"
+		<<"3.课程号\n"
+		<<"0.结束修改\n\n";
 	int Choice;
 	cin.clear();
 	cin.sync();
@@ -236,7 +252,11 @@ void Subject::Modify()
 			cout<<"修改成功！"<<endl;
 			Print();
 		}
-		cout<<"\n请输入要修改的项目：\n1.课程名\n2.学分\n3.课程号\n0.结束修改"<<endl;
+		cout<<"\n请输入要修改的项目：\n"
+			<<"1.课程名\n"
+			<<"2.学分\n"
+			<<"3.课程号\n"
+			<<"0.结束修改\n\n";
 		cin.clear();
 		cin.sync();
 		cin>>Choice;

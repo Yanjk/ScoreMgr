@@ -30,7 +30,7 @@ extern int StuCapacity;
 extern int SubjCapacity;
 extern string Gen[2];
 extern Proc Global;
-extern Semester Sem, *Sems;
+extern Semester Sem;
 extern Student Stu, *Stus;
 extern Subject Subj, *Subjs;
 extern Result **Data;
@@ -125,6 +125,9 @@ public:
 	void NewData();	
 	void ReadData();
 	void WriteData();
+	void ReleaseData();
+	int GetStu();
+	int GetSubj();
 	void PrintStus();	//
 	void PrintSubjs();	//
 	void AddStu();		//
