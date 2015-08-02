@@ -52,38 +52,19 @@ void Proc::Welcome()
 	cout<<endl;
 }
 
-/*
-void Proc::UpdateSems()
-{
-	int i;
-	for (i=0; i<SemCount; ++i)
-		if ( Sems[i] == Sem )
-			return;
-	if ( SemCount == SemCapacity )
-	{
-		Semester *temp = new Semester [SemCapacity + 10];
-		for (i=0; i<SemCount; ++i)
-			temp[i] = Sems[i];
-		delete []Sems;
-		Sems=temp;
-	}
-	Sems[SemCount++] = Sem;
-}
-*/
-
 void Proc::UpdateStus()
 {
-	int i;
-	for (i=0; i<StuCount; ++i)
+	for (int i=0; i<StuCount; ++i)
 		if ( Stus[i].StuNum == Stu.StuNum )
 		{
-			cout<<"该学号已存在！"<<endl;
+			cout<<"该学号已存在，记录失败！"<<endl;
 			return;
 		}
 	if ( StuCount == StuCapacity )
 	{
-		Student *temp = new Student [StuCapacity + 10];
-		for (i=0; i<StuCount; ++i)
+		StuCapacity += 10;
+		Student *temp = new Student [StuCapacity];
+		for (int i=0; i<StuCount; ++i)
 			temp[i] = Stus[i];
 		delete []Stus;
 		Stus = temp;
@@ -92,25 +73,59 @@ void Proc::UpdateStus()
 	cout<<"学生信息记录成功。"<<endl;
 }
 
+void Proc::UpdateStus(int Index)
+{
+	for (int i=Index+1; i<StuCount; ++i)
+		Stus[i-1] = Stus[i];
+	--StuCount;
+	if ((StuCount % 10 == 0) && (StuCount != 0))
+	{
+		StuCapacity -= 10;
+		Student *temp = new Student [StuCapacity];
+		for (int i=0; i<StuCount; ++i)
+			temp[i] = Stus[i];
+		delete []Stus;
+		Stus = temp;
+	}
+	cout<<"学生信息删除成功。"<<endl;
+}
+
 void Proc::UpdateSubjs()
 {
-	int i;
-	for (i=0; i<SubjCount; ++i)
+	for (int i=0; i<SubjCount; ++i)
 		if ( Subjs[i].SubjNum == Subj.SubjNum )
 		{
-			cout<<"该课程号已存在！"<<endl;
+			cout<<"该课程号已存在，记录失败！"<<endl;
 			return;
 		}
 	if ( SubjCount == SubjCapacity )
 	{
-		Subject *temp = new Subject [SubjCapacity + 10];
-		for (i=0; i<SubjCount; ++i)
+		SubjCapacity += 10;
+		Subject *temp = new Subject [SubjCapacity];
+		for (int i=0; i<SubjCount; ++i)
 			temp[i] = Subjs[i];
 		delete []Subjs;
-		Subjs=temp;
+		Subjs = temp;
 	}
 	Subjs[SubjCount++] = Subj;
 	cout<<"课程信息记录成功。"<<endl;
+}
+
+void Proc::UpdateSubjs(int Index)
+{
+	for (int i=Index+1; i<SubjCount; ++i)
+		Subjs[i-1] = Subjs[i];
+	--SubjCount;
+	if (SubjCount % 10 == 0)
+	{
+		SubjCapacity -= 10;
+		Subject *temp = new Subject [SubjCapacity];
+		for (int i=0; i<SubjCount; ++i)
+			temp[i] = Subjs[i];
+		delete []Subjs;
+		Subjs = temp;
+	}
+	cout<<"课程信息删除成功。"<<endl;
 }
 
 void Proc::NewData()
@@ -141,9 +156,9 @@ void Proc::ReadData()
 	Stus = new Student [StuCapacity];
 	for (int i=0; i<StuCapacity; ++i)
 		InFile.read((char*) &Stus[i], sizeof(Student));
+	Subjs = new Subject [SubjCapacity];
 	for (int i=0; i<SubjCapacity; ++i)
 		InFile.read((char*) &Subjs[i], sizeof(Subject));
-	Subjs = new Subject [SubjCapacity];
 	Data = new Result* [StuCapacity];
 	for (int i=0; i<StuCapacity; ++i)
 		Data[i] = new Result [SubjCapacity];
@@ -154,6 +169,7 @@ void Proc::ReadData()
 
 void Proc::WriteData()
 {
+	/*
 	OutFile.close();
 	OutFile.open(FileName, ios::out|ios::binary);
 	if (!OutFile)
@@ -161,6 +177,7 @@ void Proc::WriteData()
 		cout<<"文件打开失败。意外退出。"<<endl;
 		exit(1);
 	}
+	*/
 	OutFile.write((char*) &StuCount, sizeof(int));
 	OutFile.write((char*) &StuCapacity, sizeof(int));
 	OutFile.write((char*) &SubjCount, sizeof(int));
@@ -172,19 +189,23 @@ void Proc::WriteData()
 	for (int i=0; i<StuCapacity; ++i)
 		for (int j=0; j<SubjCapacity; ++j)
 			OutFile.write((char*) &Data[i][j], sizeof(Result));
+	cout<<"文件保存成功！"<<endl;
 }
 
 void Proc::ReleaseData()
 {
-	delete []Stus;
-	delete []Subjs;
-	for (int i=0; i<StuCapacity; ++i)
+	for (int i=StuCapacity-1; i>=0; --i)
+	{
+		cout<<i<<endl;
 		delete []Data[i];
+	}
 	delete []Data;
+	delete []Subjs;
+	delete []Stus;
 }
 
 // 获得需要查找的学生，用Stu保存所找到的学生，并返回该学生在Stus[]中的下标。
-// 返回-1表示未找到，返回-2表示找到多于一个学生。
+// 返回-1表示未找到，返回-2表示找到多于一个同名的学生。
 int Proc::GetStu()
 {
 	cin.clear();
@@ -308,8 +329,8 @@ int Proc::GetSubj()
 		}
 		else
 		{
-			cout<<"已找到该学生。学生信息："<<endl;
-			Stus[j].Print();
+			cout<<"已找到该课程。课程信息："<<endl;
+			Subjs[j].Print();
 			return j;
 		}
 	}
@@ -317,18 +338,18 @@ int Proc::GetSubj()
 
 void Proc::PrintStus()
 {
-	cout<<"   姓名       年龄       性别        学号"<<endl;
+	cout<<"\n全部学生信息：\n"
+		<<"   姓名       年龄       性别        学号\n";
 	for (int i=0; i<StuCount; ++i)
-		cout<<setw(7)<<Stus[i].StuName<<setw(10)<<Stus[i].Age
-			<<setw(11)<<Gen[Stus[i].Gender]<<setw(16)<<Stus[i].StuNum<<endl;
+		Stus[i].PrintBrief();
 	cout<<endl;
 }
 
 void::Proc::PrintSubjs()
 {
-	cout<<"     课程名         学分       课程号"<<endl;
+	cout<<"\n全部课程信息：\n"
+		<<"     课程名         学分       课程号\n";
 	for (int i=0; i<SubjCount; ++i)
-		cout<<setw(12)<<Subjs[i].SubjName<<setw(10)<<Subjs[i].Credit
-			<<setw(18)<<Subjs[i].SubjNum<<endl;
+		Subjs[i].PrintBrief();
 	cout<<endl;
 }

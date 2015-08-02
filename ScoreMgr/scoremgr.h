@@ -71,6 +71,7 @@ public:
 	virtual void Set();
 	virtual void Print();
 	virtual void Modify();
+	void PrintBrief();
 	void Copy(Student Stu);
 	int operator == (Student Stu2);
 	friend class Proc;
@@ -88,6 +89,7 @@ public:
 	virtual void Set();
 	virtual void Print();
 	virtual void Modify();
+	void PrintBrief();
 	void Copy(Subject Subj);
 	int operator == (Subject Subj2);
 	friend class Proc;
@@ -119,25 +121,18 @@ public:
 	void Line1();
 	void Welcome();
 	void Menu();
-	void UpdateSems();
 	void UpdateStus();
+	void UpdateStus(int Index);
 	void UpdateSubjs();
+	void UpdateSubjs(int Index);
 	void NewData();	
 	void ReadData();
 	void WriteData();
 	void ReleaseData();
 	int GetStu();
 	int GetSubj();
-	void PrintStus();	//
-	void PrintSubjs();	//
-	void AddStu();		//
-	void DelStu();		//
-	void ModifyStu();	//
-	void AddSubj();		//
-	void DelSubj();		//
-	void ModifySubj();	//
-	void SearchStu();	//
-	void SearchSubj();	//
+	void PrintStus();
+	void PrintSubjs();
 	void SortSubj();	//
 	void PrintByStu();	//
 	void PrintBySubj();	//
