@@ -4,7 +4,7 @@ void Semester::Set()
 {
 	cout<<"请输入要操作的学期信息：\n"
 		<<"学生入学年份:\n";
-	cin>>EntranceYear;
+	GetInt(EntranceYear);
 	cout<<"学年序号（如大二为2）："<<endl;
 	cin>>YearNum;
 	while ( YearNum <= 0 || YearNum > 5 )
@@ -74,21 +74,13 @@ int Semester::operator == (Semester Sem2)
 void Student::Set()
 {
 	cout<<"\n请输入学生信息:\n姓名："<<endl;
-	StuName.reserve(20);
 	cin>>StuName;
 	cout<<"年龄："<<endl;
-	cin>>Age;
+	GetInt(Age, 120);
 	cout<<"性别（女为0，男为1）:"<<endl;
-	cin>>Gender;
-	while ( Gender != 0 && Gender != 1 )
-	{
-		cout<<"输入错误，请重新输入性别（女为0，男为1）："<<endl;
-		cin.clear();
-		cin.sync();
-		cin>>Gender;
-	}
+	GetInt(Gender, 1);
 	cout<<"学号："<<endl;
-	cin>>StuNum;
+	GetInt(StuNum);
 	Print();
 	cout<<endl;
 }
@@ -108,25 +100,16 @@ void Student::PrintBrief()
 
 void Student::Modify()
 {
-	cout<<"\n请输入要修改的项目：\n"
-		<<"1.姓名\n"
-		<<"2.年龄\n"
-		<<"3.性别\n"
-		<<"4.学号\n"
-		<<"0.结束修改\n\n";
 	int Choice;
-	cin.clear();
-	cin.sync();
-	cin>>Choice;
-	while (Choice != 0)
+	do
 	{
-		while (cin.fail())
-		{
-			cin.clear();
-			cin.sync();
-			cout<<"输入错误，请重新输入："<<endl;
-			cin>>Choice;
-		}
+		cout<<"\n请输入要修改的项目：\n"
+			<<"1.姓名\n"
+			<<"2.年龄\n"
+			<<"3.性别\n"
+			<<"4.学号\n"
+			<<"0.结束修改\n\n";
+		GetInt(Choice, 4);
 		switch (Choice)
 		{
 		case 0: 
@@ -137,50 +120,38 @@ void Student::Modify()
 			break;
 		case 2:
 			cout<<"新的年龄为："<<endl;
-			cin>>Age;
+			GetInt(Age, 120);
 			break;
 		case 3:
 			cout<<"新的性别为（女为0，男为1）："<<endl;
-			cin>>Gender;
+			GetInt(Gender, 1);
 			break;
 		case 4:
 			cout<<"新的学号为："<<endl;
-			cin>>StuNum;
-			break;
-		default:
-			cout<<"输入错误，请重新输入："<<endl;
+			GetInt(StuNum);
 			break;
 		}
-		if ( Choice >= 1 && Choice <= 4 )
+		if ( Choice != 0 )
 		{
 			cout<<"修改成功！"<<endl;
 			Print();
 		}
-		cout<<"\n请输入要修改的项目：\n"
-			<<"1.姓名\n"
-			<<"2.年龄\n"
-			<<"3.性别\n"
-			<<"4.学号\n"
-			<<"0.结束修改\n\n";
-		cin.clear();
-		cin.sync();
-		cin>>Choice;
-	}
+	} while (Choice != 0);
 	cout<<endl;
 }
 
 void Student::Copy(Student Stu)
 {
-	StuName=Stu.StuName;
-	Age=Stu.Age;
-	Gender=Stu.Gender;
-	StuNum=Stu.StuNum;
+	StuName = Stu.StuName;
+	Age = Stu.Age;
+	Gender = Stu.Gender;
+	StuNum = Stu.StuNum;
 }
 
 int Student::operator == (Student Stu2)
 {
-	return ( (StuName==Stu2.StuName) && (Age==Stu2.Age) 
-		&& (Gender==Stu2.Gender) && (StuNum==Stu2.StuNum) );
+	return ( (StuName ==Stu2.StuName) && (Age == Stu2.Age) 
+		&& (Gender == Stu2.Gender) && (StuNum == Stu2.StuNum) );
 }
 
 void Subject::Set()
@@ -188,9 +159,9 @@ void Subject::Set()
 	cout<<"\n请输入课程信息：\n名称："<<endl;
 	cin>>SubjName;
 	cout<<"学分："<<endl;
-	cin>>Credit;
+	GetInt(Credit);
 	cout<<"课程号："<<endl;
-	cin>>SubjNum;
+	GetInt(SubjNum);
 	Print();
 	cout<<endl;
 }
@@ -210,24 +181,15 @@ void Subject::PrintBrief()
 
 void Subject::Modify()
 {
-	cout<<"\n请输入要修改的项目：\n"
-		<<"1.课程名\n"
-		<<"2.学分\n"
-		<<"3.课程号\n"
-		<<"0.结束修改\n\n";
 	int Choice;
-	cin.clear();
-	cin.sync();
-	cin>>Choice;
-	while (Choice != 0)
+	do
 	{
-		while (cin.fail())
-		{
-			cin.clear();
-			cin.sync();
-			cout<<"输入错误，请重新输入："<<endl;
-			cin>>Choice;
-		}
+		cout<<"\n请输入要修改的项目：\n"
+			<<"1.课程名\n"
+			<<"2.学分\n"
+			<<"3.课程号\n"
+			<<"0.结束修改\n\n";
+		GetInt(Choice, 3);
 		switch (Choice)
 		{
 		case 0:
@@ -238,14 +200,11 @@ void Subject::Modify()
 			break;
 		case 2:
 			cout<<"新的学分为："<<endl;
-			cin>>Credit;
+			GetInt(Credit);
 			break;
 		case 3:
 			cout<<"新的课程号为："<<endl;
-			cin>>SubjNum;
-			break;
-		default:
-			cout<<"输入错误，请重新输入："<<endl;
+			GetInt(SubjNum);
 			break;
 		}
 		if ( Choice >= 1 && Choice <= 3 )
@@ -253,35 +212,27 @@ void Subject::Modify()
 			cout<<"修改成功！"<<endl;
 			Print();
 		}
-		cout<<"\n请输入要修改的项目：\n"
-			<<"1.课程名\n"
-			<<"2.学分\n"
-			<<"3.课程号\n"
-			<<"0.结束修改\n\n";
-		cin.clear();
-		cin.sync();
-		cin>>Choice;
-	}
+	} while (Choice != 0);
 	cout<<endl;
 }
 
 void Subject::Copy(Subject Subj)
 {
-	SubjName=Subj.SubjName;
-	Credit=Subj.Credit;
-	SubjNum=Subj.SubjNum;
+	SubjName = Subj.SubjName;
+	Credit = Subj.Credit;
+	SubjNum = Subj.SubjNum;
 }
 
 int Subject::operator == (Subject Subj2)
 {
-	return ( (SubjName==Subj2.SubjName) && (Credit==Subj2.Credit)
-		&& (SubjNum==Subj2.SubjNum) );
+	return ( (SubjName == Subj2.SubjName) && (Credit == Subj2.Credit)
+		&& (SubjNum == Subj2.SubjNum) );
 }
 
 void Result::Set()
 {
 	cout<<"\n请输入 "<<StuName<<" 的 "<<SubjName<<" 课程成绩："<<endl;
-	cin>>Score;
+	GetInt(Score);
 	cout<<"成绩录入成功！\n\n";
 }
 
@@ -295,7 +246,7 @@ void Result::Modify()
 	cout<<StuName<<" 的 "<<SubjName<<" 课程原成绩为 "<<Score<<endl
 		<<"请输入修改后的成绩："<<endl;
 	int temp;
-	cin>>temp;
+	GetInt(temp);
 	cout<<"是否确认修改成绩？请慎重选择！\n输入1确认。\n";
 	int Choice;
 	cin>>Choice;
@@ -304,11 +255,15 @@ void Result::Modify()
 		Score = temp;
 		cout<<"修改成功！ "<<StuName<<" 的 "<<SubjName<<" 课程成绩为 "<<Score<<endl;
 	}
-	else cout<<"已放弃修改。"<<endl;
+	else
+		cout<<"已放弃修改。"<<endl;
+	cin.clear();
+	cin.sync();
 }
 
 void Result::Copy(Student Stu, Subject Subj)
 {
 	Student::Copy(Stu);
 	Subject::Copy(Subj);
+	Score = -1;
 }

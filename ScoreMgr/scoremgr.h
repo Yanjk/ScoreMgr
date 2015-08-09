@@ -21,22 +21,12 @@ class Subject;
 class Result;
 class Proc;
 
-// 对全局变量的引用声明，记录学生总数和学科总数
-extern int SemCount;
-extern int StuCount;
-extern int SubjCount;
-extern int SemCapacity;
-extern int StuCapacity;
-extern int SubjCapacity;
-extern string Gen[2];
+const string Gen[2]={"女","男"};
+
 extern Proc Global;
-extern Semester Sem;
-extern Student Stu, *Stus;
-extern Subject Subj, *Subjs;
-extern Result **Data;
-extern ifstream InFile;
-extern ofstream OutFile;
-extern char FileName[20];
+
+void GetInt (int& Int);
+void GetInt (int& Int, int UpperBnd);
 
 // 虚基类，作为所有数据类的基类
 class BaseData
@@ -80,6 +70,7 @@ protected:
 	int Age;
 	int Gender;
 	int StuNum;
+	int GPA;
 };
 
 // Subject类用于记录学科基本信息
@@ -110,32 +101,61 @@ public:
 	friend class Proc;
 protected:
 	int Score;
-	int Rank;
 };
 
 // Proc类包含了处理信息的各种函数
 class Proc
 {
 public:
-	void Line0();
-	void Line1();
+	int StuCount;
+	int StuCapacity;
+	int SubjCount;
+	int SubjCapacity;
+
+	Semester Sem;
+	Student *Stus;
+	Subject *Subjs;
+	Result **Data;
+	ifstream InFile;
+	ofstream OutFile;
+	char FileName[20];
+
 	void Welcome();
 	void Menu();
-	void UpdateStus();
+
+	int ReadFile(int Mode = 1);
+	void SaveFile();
+	void ReleaseMemory();
+
+	void UpdateStus(Student Stu);
 	void UpdateStus(int Index);
-	void UpdateSubjs();
+	void UpdateSubjs(Subject Subj);
 	void UpdateSubjs(int Index);
-	void NewData();	
-	void ReadData();
-	void WriteData();
-	void ReleaseData();
+
 	int GetStu();
 	int GetSubj();
-	void PrintStus();
-	void PrintSubjs();
-	void SortSubj();	//
-	void PrintByStu();	//
-	void PrintBySubj();	//
-	void CalcGPA();		//
-	void SortGPA();		//
+
+	void NewStu();
+	void DeleleStu();
+	void ModifyStu();
+	void NewSubj();
+	void DeleleSubj();
+	void ModifySubj();
+
+	int PrintStus();
+	int PrintSubjs();
+	void PrintByStu(int Index);
+	void PrintBySubj(int Index);
+	void PrintStuScore();
+	void PrintSubjScore();
+	void PrintTable();
+	void PrintRank();
+
+	void GetStuScore();
+	void GetSubjScore();
+	void GetStuSubjScore();
+
+	int CalcGPA(int Index);
+	int CalcAllGPA();
+	void SortGPA();
 };
